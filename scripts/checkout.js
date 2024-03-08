@@ -99,3 +99,19 @@ document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
 
 let deleteButtons = document.querySelectorAll('.js-delete-link');
 
+deleteButtons.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    
+    let quantityLabel = button.parentElement.querySelector('.quantity-label');
+    let quantity = parseInt(quantityLabel.textContent);
+
+    if (quantity > 1) {
+      quantityLabel.textContent = quantity - 1;
+    }
+    else if (quantity === 1) {
+      // Traverse up the DOM tree to the closest 'product' div and remove that
+      button.closest('.cart-item-container').remove();
+    }
+  });
+});
+
