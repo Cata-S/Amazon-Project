@@ -218,3 +218,11 @@
     padding: 12px;
   }
 }
+.update-quantity-link {
+  width: 10px; 
+  background-color: black;
+}
+
+.custom-quantity-input {
+  width: 50px;
+}

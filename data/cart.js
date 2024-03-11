@@ -68,16 +68,25 @@ export function initializeButtons() {
           input.min = '1';
           input.size = '2';
           input.maxLength = '2';
+          input.style.width = '40px';
           select.replaceWith(input);
 
           input.addEventListener('blur', (event) => {
             quantityLabel.textContent = event.target.value;
             input.replaceWith(button);
           });
+
+          input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              quantityLabel.textContent = e.target.value;
+              input.replaceWith(button);
+            }
+          });
         } else {
           quantityLabel.textContent = event.target.value;
           select.replaceWith(button);
         }
+        
       });
     });
   });
