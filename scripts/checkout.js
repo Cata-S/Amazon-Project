@@ -1,22 +1,20 @@
-import {cart, initializeButtons} from '../data/cart.js';
+// checkout.js code
+import { cart as initialCart, initializeButtons, addToCart, removeFromCart } from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatMoney } from '../utils/money.js';
+
+let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; // Initialize the cart from localStorage
 
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
-  let matchingProduct;
+  let matchingProduct = products.find(product => product.id === productId);
 
-  products.forEach((product) => {
-    if (product.id === productId) {
-      matchingProduct = product;
-    }
-  });
-
-cartSummaryHTML += `
-<div class="cart-item-container">
+  if (matchingProduct) {
+    cartSummaryHTML += `
+    <div class="cart-item-container" data-product-id="${productId}">
   <div class="delivery-date">
     Delivery date: Tuesday, June 21
   </div>
@@ -93,10 +91,8 @@ cartSummaryHTML += `
   </div>
   </div>
   `;
+  }
 });
 
 document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
 initializeButtons();
-
-
-

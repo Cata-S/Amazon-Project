@@ -1,6 +1,9 @@
-import { cart, addToCart } from '../data/cart.js';
+import { cart, addToCart, removeFromCart } from '../data/cart.js';
 import {products} from '../data/products.js'; 
 import { formatMoney } from '../utils/money.js';
+
+let myCart = JSON.parse(localStorage.getItem('cart')) || initialCart;
+
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -60,19 +63,20 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-let myCart = JSON.parse(localStorage.getItem('cart')) || [];
 // Update cart quantity
 function updateCartQuantity() {
-  let cartQuantity = 0;
+  let cartQuantity = -1;
 
-  myCart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
+  if (myCart.length > 0) {
+    myCart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+  }
 
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 };
 
-updateCartQuantity(); 
+updateCartQuantity();
 
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
@@ -80,9 +84,10 @@ document.querySelectorAll('.js-add-to-cart')
     const productId = button.dataset.productId;
     const quantity = parseInt(button.parentElement.querySelector('.js-product-quantity').value);
   
-    addToCart(myCart,productId, quantity);
+    addToCart(productId, quantity); // Use the imported addToCart function
     updateCartQuantity(); // Update cart quantity when an item is added to the cart
 
-    localStorage.setItem('cart', JSON.stringify(myCart));
+    localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage with the current state of the cart
+    location.reload(); // Reload the page to reflect the changes on the checkout page
   });
 });
