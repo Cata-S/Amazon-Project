@@ -96,3 +96,12 @@ cart.forEach((cartItem) => {
 
 document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
 initializeButtons();
+
+//Checkout Count 
+let cartQuantity = -1;
+
+cart.forEach((cartItem) => {
+  cartQuantity += cartItem.quantity;
+});
+
+document.querySelector('.js-items-count').textContent = `${cartQuantity} Items`;
