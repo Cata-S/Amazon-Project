@@ -1,11 +1,10 @@
-// checkout.js code
 import { cart as initialCart, initializeButtons, } from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatMoney } from '../utils/money.js';
 import OrderSummary from './order-summary.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; // Initialize the cart from localStorage
+  let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; 
 
   let cartSummaryHTML = '';
 
@@ -102,7 +101,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   //Checkout Count 
   let cartQuantity = -1;
-
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });

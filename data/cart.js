@@ -1,4 +1,3 @@
-// cart.js code
 export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(productId, quantity) {
@@ -20,7 +19,7 @@ export function removeFromCart(productId) {
     cart.splice(matchingItemIndex, 1);
   }
 }
-
+// Buttons
 export function initializeButtons() {
   let deleteButtons = document.querySelectorAll('.js-delete-link');
   let updateButtons = document.querySelectorAll('.update-quantity-link');
@@ -107,12 +106,6 @@ export function initializeButtons() {
   });
   document.querySelectorAll('.update-quantity-link').forEach((link) => {
     link.addEventListener('click', () => {
-      updateOrderSummary(cart, 0.1);
-    });
-  });
-  
-  document.querySelectorAll('.delivery-option-input').forEach((input) => {
-    input.addEventListener('change', () => {
       updateOrderSummary(cart, 0.1);
     });
   });
