@@ -26,6 +26,7 @@ export function initializeButtons() {
   let updateButtons = document.querySelectorAll('.update-quantity-link');
 
   deleteButtons.forEach((button) => {
+    button.classList.add('no-select');
     button.addEventListener('click', (event) => {
       let quantityLabel = button.parentElement.querySelector('.quantity-label');
       let quantity = parseInt(quantityLabel.textContent);

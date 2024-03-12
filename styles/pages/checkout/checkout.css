@@ -210,4 +210,10 @@
   margin-bottom: 15px;
 }
 
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
 
