@@ -2,106 +2,110 @@
 import { cart as initialCart, initializeButtons, } from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatMoney } from '../utils/money.js';
+import OrderSummary from './order-summary.js';
 
-let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; // Initialize the cart from localStorage
+document.addEventListener('DOMContentLoaded', (event) => {
+  let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; // Initialize the cart from localStorage
 
-let cartSummaryHTML = '';
+  let cartSummaryHTML = '';
 
-cart.forEach((cartItem) => {
-  const productId = cartItem.productId;
+  cart.forEach((cartItem) => {
+    const productId = cartItem.productId;
+    let matchingProduct = products.find(product => product.id === productId);
 
-  let matchingProduct = products.find(product => product.id === productId);
-
-  if (matchingProduct) {
-    cartSummaryHTML += `
-    <div class="cart-item-container" data-product-id="${productId}">
-  <div class="delivery-date">
-    Delivery date: Tuesday, June 21
-  </div>
-
-  <div class="cart-item-details-grid">
-    <img class="product-image"
-      src="${matchingProduct.image}">
-
-    <div class="cart-item-details">
-      <div class="product-name">
-        ${matchingProduct.name}
-      </div>
-      <div class="product-price">
-        $${formatMoney(matchingProduct.priceCents)}
-      </div>
-      <div class="product-quantity">
-        <span>
-          Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-        </span>
-        <span class="update-quantity-link link-primary "">
-          Update
-        </span>
-        <span class="delete-quantity-link link-primary
-        js-delete-link">
-          Delete
-        </span>
-      </div>
+    if (matchingProduct) {
+      cartSummaryHTML += `
+      <div class="cart-item-container" data-product-id="${productId}">
+    <div class="delivery-date">
+      Delivery date: Tuesday, June 21
     </div>
 
-    <div class="delivery-options">
-      <div class="delivery-options-title">
-        Choose a delivery option:
-      </div>
-      <div class="delivery-option">
-        <input type="radio" checked
-          class="delivery-option-input"
-          name="delivery-option-${productId}">
-        <div>
-          <div class="delivery-option-date">
-            Tuesday, June 21
-          </div>
-          <div class="delivery-option-price">
-            FREE Shipping
-          </div>
+    <div class="cart-item-details-grid">
+      <img class="product-image"
+        src="${matchingProduct.image}">
+
+      <div class="cart-item-details">
+        <div class="product-name">
+          ${matchingProduct.name}
+        </div>
+        <div class="product-price">
+          $${formatMoney(matchingProduct.priceCents)}
+        </div>
+        <div class="product-quantity">
+          <span>
+            Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+          </span>
+          <span class="update-quantity-link link-primary "">
+            Update
+          </span>
+          <span class="delete-quantity-link link-primary
+          js-delete-link">
+            Delete
+          </span>
         </div>
       </div>
-      <div class="delivery-option">
-        <input type="radio"
-          class="delivery-option-input"
-          name="delivery-option-${productId}">
-        <div>
-          <div class="delivery-option-date">
-            Wednesday, June 15
-          </div>
-          <div class="delivery-option-price">
-            $4.99 - Shipping
+
+      <div class="delivery-options">
+        <div class="delivery-options-title">
+          Choose a delivery option:
+        </div>
+        <div class="delivery-option">
+          <input type="radio" checked
+            class="delivery-option-input"
+            name="delivery-option-${productId}">
+          <div>
+            <div class="delivery-option-date">
+              Tuesday, June 21
+            </div>
+            <div class="delivery-option-price">
+              FREE Shipping
+            </div>
           </div>
         </div>
-      </div>
-      <div class="delivery-option">
-        <input type="radio"
-          class="delivery-option-input"
-          name="delivery-option-${productId}">
-        <div>
-          <div class="delivery-option-date">
-            Monday, June 13
+        <div class="delivery-option">
+          <input type="radio"
+            class="delivery-option-input"
+            name="delivery-option-${productId}">
+          <div>
+            <div class="delivery-option-date">
+              Wednesday, June 15
+            </div>
+            <div class="delivery-option-price">
+              $4.99 - Shipping
+            </div>
           </div>
-          <div class="delivery-option-price">
-            $9.99 - Shipping
+        </div>
+        <div class="delivery-option">
+          <input type="radio"
+            class="delivery-option-input"
+            name="delivery-option-${productId}">
+          <div>
+            <div class="delivery-option-date">
+              Monday, June 13
+            </div>
+            <div class="delivery-option-price">
+              $9.99 - Shipping
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
-  `;
-  }
+    </div>
+    `;
+    }
+  });
+
+  document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
+  initializeButtons();
+
+  OrderSummary.generateOrderSummary(cart);
+
+  //Checkout Count 
+  let cartQuantity = -1;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-items-count').textContent = `${cartQuantity} Items`;
 });
-
-document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
-initializeButtons();
-
-//Checkout Count 
-let cartQuantity = -1;
-
-cart.forEach((cartItem) => {
-  cartQuantity += cartItem.quantity;
-});
-
-document.querySelector('.js-items-count').textContent = `${cartQuantity} Items`;

@@ -105,4 +105,15 @@ export function initializeButtons() {
       });
     });
   });
+  document.querySelectorAll('.update-quantity-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      updateOrderSummary(cart, 0.1);
+    });
+  });
+  
+  document.querySelectorAll('.delivery-option-input').forEach((input) => {
+    input.addEventListener('change', () => {
+      updateOrderSummary(cart, 0.1);
+    });
+  });
 }
