@@ -1,10 +1,14 @@
-import { products } from '../data/products.js';
+import { products } from "../data/products.js";
 
 function calculateShipping() {
   let shippingCost = 0;
-  let shippingInputs = document.querySelectorAll('.delivery-option-input:checked');
+  let shippingInputs = document.querySelectorAll(
+    ".delivery-option-input:checked"
+  );
   shippingInputs.forEach((input) => {
-    let priceText = input.parentElement.querySelector('.delivery-option-price').textContent;
+    let priceText = input.parentElement.querySelector(
+      ".delivery-option-price"
+    ).textContent;
     let match = priceText.match(/\$([0-9\.]+)/);
     if (match) {
       shippingCost += parseFloat(match[1]) * 100; // Convert to cents
@@ -22,13 +26,15 @@ function updateOrderSummary(cart, taxRate) {
   let shipping = calculateShipping();
   let tax = calculateTax(total, taxRate);
   let grandTotal = total + shipping + tax;
-  document.querySelector('.js-order-total').textContent = `$${grandTotal.toFixed(2)}`;
+  document.querySelector(
+    ".js-order-total"
+  ).textContent = `$${grandTotal.toFixed(2)}`;
 }
 
 function generateOrderSummary(cart) {
   let total = calculateTotal(cart);
   let shipping = calculateShipping();
-  let tax = total * 0.1; 
+  let tax = total * 0.1;
 
   let cartQuantity = 0;
 
@@ -43,7 +49,7 @@ function generateOrderSummary(cart) {
     </div>
 
     <div class="payment-summary-row js-items">
-      <div>Items (${cartQuantity -1}):</div>
+      <div>Items (${cartQuantity - 1}):</div>
       <div class="payment-summary-money">$${(total / 100).toFixed(2)}</div>
     </div>
 
@@ -54,7 +60,9 @@ function generateOrderSummary(cart) {
 
     <div class="payment-summary-row subtotal-row">
       <div>Total before tax:</div>
-      <div class="payment-summary-money">$${((total + shipping) / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${((total + shipping) / 100).toFixed(
+        2
+      )}</div>
     </div>
 
     <div class="payment-summary-row">
@@ -64,7 +72,10 @@ function generateOrderSummary(cart) {
 
     <div class="payment-summary-row total-row">
       <div>Order total:</div>
-      <div class="payment-summary-money">$${((total + shipping + tax) / 100).toFixed(2)}</div>
+      <div class="payment-summary-money">$${(
+        (total + shipping + tax) /
+        100
+      ).toFixed(2)}</div>
     </div>
 
     <button class="place-order-button button-primary">
@@ -73,11 +84,13 @@ function generateOrderSummary(cart) {
   </div>
   `;
 
-  document.querySelector('.js-order-summary').innerHTML = summaryHTML;
+  document.querySelector(".js-order-summary").innerHTML = summaryHTML;
 
-  let deliveryOptionInputs = document.querySelectorAll('.delivery-option-input');
+  let deliveryOptionInputs = document.querySelectorAll(
+    ".delivery-option-input"
+  );
   deliveryOptionInputs.forEach((input) => {
-    input.addEventListener('change', () => {
+    input.addEventListener("change", () => {
       generateOrderSummary(cart);
     });
   });
@@ -85,15 +98,17 @@ function generateOrderSummary(cart) {
 function calculateTotal(cart) {
   let total = 0;
   cart.forEach((cartItem) => {
-    let matchingProduct = products.find(product => product.id === cartItem.productId); 
+    let matchingProduct = products.find(
+      (product) => product.id === cartItem.productId
+    );
     if (matchingProduct) {
       total += matchingProduct.priceCents * cartItem.quantity;
     }
   });
   return total;
 }
-document.addEventListener('DOMContentLoaded', (event) => {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.addEventListener("DOMContentLoaded", (event) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   setTimeout(() => {
     generateOrderSummary(cart);
@@ -105,7 +120,7 @@ const OrderSummary = {
   calculateShipping,
   calculateTax,
   updateOrderSummary,
-  generateOrderSummary
+  generateOrderSummary,
 };
 
 export default OrderSummary;

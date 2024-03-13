@@ -1,16 +1,16 @@
-import { cart as initialCart, initializeButtons, } from '../data/cart.js';
-import {products} from '../data/products.js';
-import { formatMoney } from '../utils/money.js';
-import OrderSummary from './order-summary.js';
+import { cart as initialCart, initializeButtons } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatMoney } from "../utils/money.js";
+import OrderSummary from "./order-summary.js";
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  let cart = JSON.parse(localStorage.getItem('cart')) || initialCart; 
+document.addEventListener("DOMContentLoaded", (event) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || initialCart;
 
-  let cartSummaryHTML = '';
+  let cartSummaryHTML = "";
 
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
-    let matchingProduct = products.find(product => product.id === productId);
+    let matchingProduct = products.find((product) => product.id === productId);
 
     if (matchingProduct) {
       cartSummaryHTML += `
@@ -94,16 +94,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 
-  document.querySelector('.js-cart-summary').innerHTML = cartSummaryHTML;
+  document.querySelector(".js-cart-summary").innerHTML = cartSummaryHTML;
   initializeButtons();
 
   OrderSummary.generateOrderSummary(cart);
 
-  //Checkout Count 
+  //Checkout Count
   let cartQuantity = -1;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
 
-  document.querySelector('.js-items-count').textContent = `${cartQuantity} Items`;
+  document.querySelector(
+    ".js-items-count"
+  ).textContent = `${cartQuantity} Items`;
 });
