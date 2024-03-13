@@ -1,13 +1,13 @@
-import { cart, addToCart, removeFromCart } from '../data/cart.js';
-import {products} from '../data/products.js'; 
-import { formatMoney } from '../utils/money.js';
+import { cart, addToCart, removeFromCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatMoney } from "../utils/money.js";
 
-let myCart = JSON.parse(localStorage.getItem('cart')) || initialCart;
+let myCart = JSON.parse(localStorage.getItem("cart")) || initialCart;
 
-let productsHTML = '';
+let productsHTML = "";
 
 products.forEach((product) => {
-  productsHTML +=`
+  productsHTML += `
      <div class="product-container">
       <div class="product-image-container">
         <img class="product-image"
@@ -58,10 +58,10 @@ products.forEach((product) => {
         Add to Cart
       </button>
     </div>
-  `; 
+  `;
 });
 
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 // Update cart quantity
 function updateCartQuantity() {
@@ -73,21 +73,22 @@ function updateCartQuantity() {
     });
   }
 
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-};
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+}
 
 updateCartQuantity();
 
-document.querySelectorAll('.js-add-to-cart')
-.forEach((button) => {
-  button.addEventListener('click', () => {
+document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+  button.addEventListener("click", () => {
     const productId = button.dataset.productId;
-    const quantity = parseInt(button.parentElement.querySelector('.js-product-quantity').value);
-  
+    const quantity = parseInt(
+      button.parentElement.querySelector(".js-product-quantity").value
+    );
+
     addToCart(productId, quantity); // Use the imported addToCart function
     updateCartQuantity(); // Update cart quantity when an item is added to the cart
 
-    localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage with the current state of the cart
+    localStorage.setItem("cart", JSON.stringify(cart)); // Update localStorage with the current state of the cart
     location.reload(); // Reload the page to reflect the changes on the checkout page
   });
 });
