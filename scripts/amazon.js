@@ -1,6 +1,6 @@
 import { cart, addToCart, removeFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
-import { formatMoney } from "../utils/money.js";
+import  formatMoney  from "../utils/money.js";
 
 let myCart = JSON.parse(localStorage.getItem("cart")) || initialCart;
 
