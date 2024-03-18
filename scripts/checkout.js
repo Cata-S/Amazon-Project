@@ -6,6 +6,7 @@ import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   let cart = JSON.parse(localStorage.getItem("cart")) || initialCart;
+  // Get the current date
   let today = dayjs();
 
   let cartSummaryHTML = "";
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     `;
     }
   });
-
+  // Insert the cart summary HTML into the page
   document.querySelector(".js-cart-summary").innerHTML = cartSummaryHTML;
 
   document.querySelectorAll('input[name^="delivery-option"]').forEach((radioButton) => {
@@ -119,12 +120,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   OrderSummary.generateOrderSummary(cart);
 
-  //Checkout Count
+  // Calculate the total quantity of items in the cart
   let cartQuantity = -1;
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
-
+  // Display the total quantity of items in the cart
   document.querySelector(
     ".js-items-count"
   ).textContent = `${cartQuantity} Items`;
