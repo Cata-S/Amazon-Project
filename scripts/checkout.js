@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
   // Insert the cart summary HTML into the page
   document.querySelector(".js-cart-summary").innerHTML = cartSummaryHTML;
-
+  // Delivery Date
   document.querySelectorAll('input[name^="delivery-option"]').forEach((radioButton) => {
     radioButton.addEventListener('change', (event) => {
       if (radioButton.checked) {
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  initializeButtons();
+  initializeButtons(OrderSummary.generateOrderSummary, OrderSummary.updateCheckoutCount);
 
   OrderSummary.generateOrderSummary(cart);
 

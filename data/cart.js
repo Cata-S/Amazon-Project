@@ -24,7 +24,7 @@ export function removeFromCart(productId) {
   }
 }
 // Buttons
-export function initializeButtons() {
+export function initializeButtons(updateOrderSummaryCallback, updateCheckoutCountCallback) {
   let deleteButtons = document.querySelectorAll(".js-delete-link");
   let updateButtons = document.querySelectorAll(".update-quantity-link");
 
@@ -49,7 +49,8 @@ export function initializeButtons() {
         location.reload();
         button.closest(".cart-item-container").remove();
       }
-      location.reload();
+      updateOrderSummaryCallback(cart);
+      updateCheckoutCountCallback(cart);
     });
   });
   updateButtons.forEach((button) => {
@@ -81,22 +82,24 @@ export function initializeButtons() {
           select.replaceWith(input);
 
           input.addEventListener("blur", (event) => {
-            let cartItem = cart.find((item) => item.productId === productId); // Use stored productId
+            let cartItem = cart.find((item) => item.productId === productId); 
             cartItem.quantity = parseInt(event.target.value);
             quantityLabel.textContent = event.target.value;
             input.replaceWith(button);
             localStorage.setItem("cart", JSON.stringify(cart));
-            location.reload();
+            updateOrderSummaryCallback(cart);
+          updateCheckoutCountCallback(cart);
           });
 
           input.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-              let cartItem = cart.find((item) => item.productId === productId); // Use stored productId
+              let cartItem = cart.find((item) => item.productId === productId); 
               cartItem.quantity = parseInt(e.target.value);
               quantityLabel.textContent = e.target.value;
               input.replaceWith(button);
               localStorage.setItem("cart", JSON.stringify(cart));
-              location.reload();
+              updateOrderSummaryCallback(cart);
+              updateCheckoutCountCallback(cart);
             }
           });
         } else {
@@ -105,7 +108,8 @@ export function initializeButtons() {
           quantityLabel.textContent = event.target.value;
           select.replaceWith(button);
           localStorage.setItem("cart", JSON.stringify(cart));
-          location.reload();
+          updateOrderSummaryCallback(cart);
+          updateCheckoutCountCallback(cart);
         }
       });
     });

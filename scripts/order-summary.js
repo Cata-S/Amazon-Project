@@ -115,12 +115,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }, 0);
 });
 
+function updateCheckoutCount(cart) {
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector('.checkout-count').textContent = cartQuantity;
+}
+
 const OrderSummary = {
   calculateTotal,
   calculateShipping,
   calculateTax,
   updateOrderSummary,
   generateOrderSummary,
+  updateCheckoutCount,
 };
 
 export default OrderSummary;
